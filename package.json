@@ -1,6 +1,6 @@
 {
   "name": "@skainstig/flat-tree",
-  "version": "0.1.0",
+  "version": "0.9.0",
   "description": "Simple function to build flat presentation of arbitrary tree and tests for it.",
   "author": "Skainstig <skainstig@proton.me>",
   "license": "ISC",
