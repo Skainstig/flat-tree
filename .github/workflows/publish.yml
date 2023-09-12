@@ -30,7 +30,7 @@ jobs:
       - uses: actions/setup-node@v3
       - run: git config --global user.email "<>"
       - run: git config --global user.name "Publish Action"
-      - run: npm version ${{ github.event.inputs.version }} && git push
+      - run: git pull && npm version ${{ github.event.inputs.version }} && git push
 
   publish-package:
     needs: [bump-version]
@@ -38,6 +38,9 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
       - uses: actions/checkout@v4
+        with:
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@skainstig'
       - run: npm ci
       - run: npm run build
       - run: npm publish
