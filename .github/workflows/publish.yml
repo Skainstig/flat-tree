@@ -1,0 +1,45 @@
+name: Publish to GH
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version'
+        required: true
+        type: string
+
+permissions:
+  packages: write
+  contents: write
+
+jobs:
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - run: npm run test
+
+  bump-version:
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+      - run: git config --global user.email "<>"
+      - run: git config --global user.name "Publish Action"
+      - run: npm version ${{ github.event.inputs.version }} && git push
+
+  publish-package:
+    needs: [bump-version]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - run: npm run build
+      - run: npm publish
+      # todo: provide auth token
+        
