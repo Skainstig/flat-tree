@@ -6,7 +6,7 @@ export default defineConfig({
 	build: {
 		lib: {
 			entry: resolve(__dirname, 'src/index.ts'),
-			name: 'panda-flat-tree',
+			name: 'flat-tree',
 			fileName: 'index',
 			formats: ['es'],
 		},
